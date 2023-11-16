@@ -8,9 +8,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParam = {
     Logout : undefined;
 }
-const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+
 
 export const Settings: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   return (
     <View style={styles.container}>
       <Text style={styles.header}>설정 및 로그아웃</Text>
