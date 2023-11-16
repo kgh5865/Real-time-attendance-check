@@ -1,8 +1,14 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export const List = () => {
+export const App: React.FC = () => {
   const subjects: string[] = ['캡스톤디자인1', '운영체재개론', '통신네트워크및실습'];
+  const navigation = useNavigation();
+
+  const handleSubjectPress = (subject: string) => {
+    navigation.navigate('List1', { selectedSubject: subject });
+  };
 
   return (
     <View style={styles.container}>
@@ -11,20 +17,9 @@ export const List = () => {
         <Button
           key={index}
           title={subject}
-          onPress={() => (`선택한 과목: ${String(subject)}`)}
-        />
+          onPress={() => handleSubjectPress(subject)} />
       ))}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    buttonContainer: {
-      marginVertical: 40, // 원하는 간격으로 조절
-    },
-  },
-});
