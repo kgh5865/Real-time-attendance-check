@@ -209,23 +209,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\NLab\\Desktop\\reactnative\\mainview\\android\\app\\src\\main\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "17",
-                        "endColumns": "45",
-                        "endOffsets": "58"
-                    },
-                    "to": {
-                        "startLines": "1881",
-                        "startColumns": "4",
-                        "startOffsets": "125692",
-                        "endColumns": "45",
-                        "endOffsets": "125733"
-                    }
-                },
-                {
                     "source": "C:\\Users\\NLab\\.gradle\\caches\\transforms-3\\0fab59b68babfc1c516f6d15dc341f56\\transformed\\lifecycle-runtime-2.5.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -262,7 +245,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\NLab\\Desktop\\reactnative\\mainview\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
+                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
                     "from": {
                         "startLines": "6,8",
                         "startColumns": "4,4",
@@ -279,7 +262,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\NLab\\Desktop\\reactnative\\mainview\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
@@ -367,6 +350,23 @@
                         "startOffsets": "118526",
                         "endColumns": "59",
                         "endOffsets": "118581"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "17",
+                        "endColumns": "45",
+                        "endOffsets": "58"
+                    },
+                    "to": {
+                        "startLines": "1881",
+                        "startColumns": "4",
+                        "startOffsets": "125692",
+                        "endColumns": "45",
+                        "endOffsets": "125733"
                     }
                 },
                 {
