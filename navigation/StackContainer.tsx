@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Main2 }  from './screens/Main2';
+import { Main2 }  from './screens/user/Main';
 import { Main }   from './screens/Main';
-import List from './screens/List'; // 대문자로 시작해야 합니다
+import List from './screens/user/Subject'; // 대문자로 시작해야 합니다
 import List1 from './screens/List1';
 import List2 from './screens/List2';
 import List3 from './screens/List3';
