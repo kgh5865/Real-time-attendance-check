@@ -25,8 +25,9 @@ ios/.xcode.env.local
 # Android/IntelliJ
 #
 build/
-.idea
 .gradle
+.gradle/
+.idea
 local.properties
 *.iml
 *.hprof
@@ -64,3 +65,5 @@ yarn-error.log
 
 # testing
 /coverage
+android/.gradle/8.0.1/fileHashes/fileHashes.bin
+android/.gradle/8.0.1/fileHashes/fileHashes.lock
