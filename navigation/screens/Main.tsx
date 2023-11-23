@@ -12,6 +12,7 @@ export type RootStackParam = {
     stu_type: string;
   };
   List: undefined;
+  Settings: undefined;
 };
 
 function touchFunc(){
@@ -71,7 +72,7 @@ export const Main = () => {
     
     />
     <Button
-      title="쪽지보내기"
+      title="설정"
       loading={false}
       loadingProps={{ size: 'small', color: 'white' }}
       buttonStyle={{
@@ -89,7 +90,7 @@ export const Main = () => {
         width: 100,
         marginRight: 60,
       }}
-      onPress={() => console.log('쪽지보내기')}
+      onPress={() => navigation.navigate('Settings')}
     />
   </View>
   <View style={styles.rowView}>
