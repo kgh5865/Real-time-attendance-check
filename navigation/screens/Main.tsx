@@ -1,145 +1,240 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Alert } from 'react-native';
-import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
+import { View, StyleSheet, Alert } from 'react-native';
+import { Button, Text } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import TouchID from 'react-native-touch-id';
+import { UserDataType, AdminDataType } from '../userdata';
+import { Auth } from 'aws-amplify';
+import axios from 'axios';
 
-export type RootStackParam = {
+type RootStackParam = {
   Main: {
     stu_num: string;
     stu_name: string;
     stu_type: string;
   };
-  List: undefined;
-  Settings: undefined;
+  MainAdmin: undefined;
+  MainUser: undefined;
+  List1: undefined;
+  Main2: undefined;
+  Subject: undefined;
 };
 
-function touchFunc(){
-  TouchID.isSupported()
-      .then((supported) => {
-        if (supported) {
-          TouchID.authenticate('지문을 스캔해주세요')
-            .then((success: boolean) => {
-              if (success) {
-                Alert.alert('지문 인식 성공!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-              } else {
-                Alert.alert('지문 인식 실패!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-              }
-            })
-            .catch((error: Error) => {
-              console.log('지문 인식 오류', error);
-            });
-        } else {
-          Alert.alert('이 기기에서는 지문 인식을 지원하지 않습니다.'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-        }
-      });
-}
+type MainScreenRouteProp = RouteProp<RootStackParam, 'Main'>;
 
-export const Main = () => {
+const Main: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  const route = useRoute<RouteProp<RootStackParam, 'Main'>>();
+  const route = useRoute<MainScreenRouteProp>();
+
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [lambdaResponse, setLambdaResponse] = useState<string>('');//람다 함수 응답
+  const [userData, setUserData] = useState<UserDataType | null>(null);
+  const [adminData, setadminData] = useState<AdminDataType | null>(null);
+
+  const fetchUserAndInvokeLambda = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      setCurrentUser(user);
+
+      // 사용자가 있는 경우에만 람다 함수 호출
+      if (user) {
+        const response = await invokeLambdaFunction(user);
+        setLambdaResponse(response); // 람다 함수 응답을 state에 저장
+      }
+    } catch (error) {
+      console.log('사용자 정보를 가져오지 못했습니다:', error);
+      setCurrentUser(null);
+    }
+  };
+
+  const invokeLambdaFunctionAdmin = async (user: any): Promise<string> => {
+    try {
+      const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/getadminname';
+      const userEmail = user.attributes?.email;
+  
+      const response = await axios.post(apiUrl, {
+        email: userEmail,
+      });
+
+      console.log(userEmail);
+
+      // 응답 데이터 확인
+      console.log('람다 함수 응답 전체:', response.data);
+  
+      // "user" 키 확인
+    if (response.data && response.data.body) {
+      const parsedBody = JSON.parse(response.data.body);
+
+      // "user" 배열 내의 첫 번째 요소에 직접 접근
+      const userArray = parsedBody.admin;
+
+      if (userArray && userArray.length > 0) {
+        const firstUser = userArray[0];
+
+        const admin: AdminDataType = {
+          admin_id: firstUser.admin_id,
+          name: firstUser.name,
+          department: firstUser.department,
+        };
+
+        setadminData(admin);
+      } else {
+
+        console.error('람다 함수 응답에서 유효한 "admin" 데이터를 찾을 수 없습니다.');
+      }
+    } else {
+      console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
+    }
+
+    const responseBody = response.data.body;
+    return responseBody;
+    }
+    catch (error) {
+    console.error('람다 함수 호출 중 오류:', error);
+    return ''; // 에러가 발생한 경우 빈 문자열 반환
+  }
+  }
+
+  const invokeLambdaFunction = async (user: any): Promise<string> => {
+    try {
+      const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/getusername';
+      const userEmail = user.attributes?.email;
+  
+      const response = await axios.post(apiUrl, {
+        email: userEmail,
+      });
+  
+      // 응답 데이터 확인
+      console.log('람다 함수 응답 전체:', response.data.user);
+  
+      // "user" 키 확인
+    if (response.data && response.data.body) {
+      const parsedBody = JSON.parse(response.data.body);
+
+      // "user" 배열 내의 첫 번째 요소에 직접 접근
+      const userArray = parsedBody.user;
+
+      if (userArray && userArray.length > 0) {
+        const firstUser = userArray[0];
+
+        const user: UserDataType = {
+          user_id: firstUser.user_id,
+          name: firstUser.name,
+          department: firstUser.department,
+        };
+
+        console.log(user);
+        setUserData(user);
+      } else {
+
+        console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
+        invokeLambdaFunctionAdmin(user);
+      }
+    } else {
+      console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
+    }
+
+    const responseBody = response.data.body;
+    return responseBody;
+    } catch (error) {
+      console.error('람다 함수 호출 중 오류:', error);
+      return ''; // 에러가 발생한 경우 빈 문자열 반환
+    }
+  };
+
+  useEffect(() => {
+    fetchUserAndInvokeLambda();
+  }, []);
+
+  const handleStudentPress = () => {
+    if (currentUser && currentUser.attributes?.sub !== 'c97c8114-6021-4f95-b5fe-6c03f71f3f7b') {
+      console.log('학생');
+      Alert.alert('알림', '학생');
+      navigation.navigate('MainUser');
+    } else {
+      console.log('교수');
+      Alert.alert('알림', '교수는 학생 섹션에 접근할 수 없습니다');
+    }
+  };
+
+  const handleProfessorPress = () => {
+    if (currentUser && currentUser.attributes?.sub === 'c97c8114-6021-4f95-b5fe-6c03f71f3f7b') {
+      console.log('교수');
+      Alert.alert('알림', '교수');
+      navigation.navigate('MainAdmin');
+    } else {
+      console.log('학생');
+      Alert.alert('알림', '학생은 교수 섹션에 접근할 수 없습니다');
+    }
+  };
 
   return (
     <View style={styles.contentView}>
-            <Text style={styles.subHeader}>스마트 출석부</Text>
-            <View style={styles.buttonsContainer}>
-  <Text style={{ color: 'black', fontSize: 20 }}>{route.params?.stu_num}</Text>
-  <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_name}</Text>
-  <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_type}</Text>
-  <View style={styles.rowView}>
-    <Button
-      title="출석현황"
-      loading={false}
-      loadingProps={{ size: 'small', color: 'white' }}
-      buttonStyle={{
-        backgroundColor: 'rgba(111, 202, 186, 1)',
-        borderRadius: 10,
-      }}
-      titleStyle={{
-        fontWeight: 'bold',
-        fontSize: 15,
-        paddingTop: 30,
-        paddingBottom: 30,
-      }}
-      containerStyle={{
-        height: 100,
-        width: 100,
-        marginLeft: 60,
-      }}
+      <Text style={styles.subHeader}>스마트 출석부</Text>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.rowView}>
+          <Button
+            title="학생"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: 'rgba(111, 202, 186, 1)',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginLeft: 60,
+            }}
+            onPress={handleStudentPress}
+          />
+          <Button
+            title="교수"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: 'rgba(127, 220, 103, 1)',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginRight: 60,
+            }}
+            onPress={handleProfessorPress}
+          />
+        </View>
+      </View>
 
-      onPress={() => navigation.navigate('List')}
-    
-    />
-    <Button
-      title="설정"
-      loading={false}
-      loadingProps={{ size: 'small', color: 'white' }}
-      buttonStyle={{
-        backgroundColor: 'rgba(127, 220, 103, 1)',
-        borderRadius: 10,
-      }}
-      titleStyle={{
-        fontWeight: 'bold',
-        fontSize: 15,
-        paddingTop: 30,
-        paddingBottom: 30,
-      }}
-      containerStyle={{
-        height: 100,
-        width: 100,
-        marginRight: 60,
-      }}
-      onPress={() => navigation.navigate('Settings')}
-    />
-  </View>
-  <View style={styles.rowView}>
-    <Button
-      title="출석"
-      loading={false}
-      loadingProps={{ size: 'small', color: 'white' }}
-      buttonStyle={{
-        backgroundColor: 'rgba(150, 190, 103, 1)',
-        borderRadius: 10,
-      }}
-      titleStyle={{
-        fontWeight: 'bold',
-        fontSize: 15,
-        paddingTop: 30,
-        paddingBottom: 30,
-      }}
-      containerStyle={{
-        height: 100,
-        width: 100,
-        marginLeft: 60,
-        marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
-      }}
-      onPress={() => touchFunc()}
-    />
-    <Button
-      title="종료"
-      loading={false}
-      loadingProps={{ size: 'small', color: 'white' }}
-      buttonStyle={{
-        backgroundColor: 'rgba(110, 100, 210, 1)',
-        borderRadius: 10,
-      }}
-      titleStyle={{
-        fontWeight: 'bold',
-        fontSize: 15,
-        paddingTop: 30,
-        paddingBottom: 30,
-      }}
-      containerStyle={{
-        height: 100,
-        width: 100,
-        marginRight: 60,
-        marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
-      }}
-      onPress={() => touchFunc()}
-    />
-  </View>
-</View>
+      {/* 추가된 부분: 람다 함수 응답 및 사용자 데이터 화면에 표시 */}
+      <View style={styles.userDataContainer}>
+        {userData && (
+          <>
+            <Text style={styles.userDataText}>user_id: {userData.user_id}</Text>
+            <Text style={styles.userDataText}>name: {userData.name}</Text>
+            <Text style={styles.userDataText}>department: {userData.department}</Text>
+          </>
+        )}
+        {adminData && (
+          <>
+            <Text style={styles.userDataText}>user_id: {adminData.admin_id}</Text>
+            <Text style={styles.userDataText}>name: {adminData.name}</Text>
+            <Text style={styles.userDataText}>department: {adminData.department}</Text>
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -168,5 +263,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginVertical: 20,
-  }
+  },
+  responseText: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'black',
+  },
+  userDataContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  userDataText: {
+    fontSize: 16,
+    color: 'black',
+    marginVertical: 5,
+  },
 });
+
+export default Main;

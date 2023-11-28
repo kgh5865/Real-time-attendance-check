@@ -13,9 +13,9 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome!</Text>
+        <Text style={styles.headerText}>로그인 페이지로 돌아가기</Text>
         <Pressable style={styles.button} onPress={() => signOut()}>
-          <Text style={styles.buttonText}>Sign out</Text>
+          <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>
     </View>
