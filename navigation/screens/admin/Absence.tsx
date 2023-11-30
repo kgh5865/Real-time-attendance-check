@@ -1,16 +1,22 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParam } from './MainAdmin';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Auth } from 'aws-amplify';
 import axios from 'axios';
 import AppContext from '../../../AppContext';
 
-type AbsenceScreenRouteProp = RouteProp<RootStackParam, 'Absence'>;
+type RootStackParam = {
+  Main: undefined;
+  MainAdmin: undefined;
+  MainUser: undefined;
+  List1: undefined;
+  Main2: undefined;
+  Subject: undefined;
+};
 
 const Absence: React.FC = () => {
-  const route = useRoute<AbsenceScreenRouteProp>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [serverState, setServerState] = useState<string>('');
   const [absentStudents, setAbsentStudents] = useState<string[]>([]); // State to store absent students
   const [attendanceStudents, setAttendanceStudents] = useState<string[]>([]);
@@ -46,6 +52,12 @@ const Absence: React.FC = () => {
     }
   };
 
+  const handleAttendanceEnd = () => {
+    // 여기에 출석 종료 시 수행할 작업 추가
+    console.log('출석 종료 버튼이 눌렸습니다.');
+    navigation.goBack();
+  };
+
   useEffect(() => {
     invokeLambdaFunction();
     webSocket.current = new WebSocket('http://210.119.103.171:8080');
@@ -73,21 +85,20 @@ const Absence: React.FC = () => {
         console.log(parse.name);
 
         // 받아온 이름을 attendanceStudents에 추가
-      setAttendanceStudents((prevAttendanceStudents) => {
-        // attendanceStudents 배열에 이미 존재하지 않는 경우에만 추가
-        if (!prevAttendanceStudents.includes(parse.name)) {
-          // absentStudents 배열에서 해당 학생 제외
-          setAbsentStudents((prevAbsentStudents) =>
-            prevAbsentStudents.filter((student) => student !== parse.name)
-          );
+        setAttendanceStudents((prevAttendanceStudents) => {
+          // attendanceStudents 배열에 이미 존재하지 않는 경우에만 추가
+          if (!prevAttendanceStudents.includes(parse.name)) {
+            // absentStudents 배열에서 해당 학생 제외
+            setAbsentStudents((prevAbsentStudents) =>
+              prevAbsentStudents.filter((student) => student !== parse.name)
+            );
 
-          return [...prevAttendanceStudents, parse.name];
-        }
+            return [...prevAttendanceStudents, parse.name];
+          }
 
-        return prevAttendanceStudents;
-      });
+          return prevAttendanceStudents;
+        });
       }
-      
     };
 
     // Cleanup function
@@ -102,7 +113,7 @@ const Absence: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.column}>
+      <ScrollView contentContainerStyle={styles.column}>
         <Text style={styles.header}>결석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
           {absentStudents.map((student, index) => (
@@ -111,17 +122,23 @@ const Absence: React.FC = () => {
             </Text>
           ))}
         </View>
-      </View>
-      <View style={styles.column}>
+      </ScrollView>
+
+      <ScrollView contentContainerStyle={styles.column}>
         <Text style={styles.header}>출석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
-        {attendanceStudents.map((student, index) => (
-          <Text key={index} style={styles.absentStudent}>
-            {student}
-          </Text>
-        ))}
+          {attendanceStudents.map((student, index) => (
+            <Text key={index} style={styles.absentStudent}>
+              {student}
+            </Text>
+          ))}
         </View>
-      </View>
+      </ScrollView>
+
+      {/* 출석 종료 버튼 */}
+      <TouchableOpacity style={styles.attendanceEndButton} onPress={handleAttendanceEnd}>
+        <Text style={styles.attendanceEndButtonText}>출석 종료</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -133,7 +150,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Add space around the columns
     alignItems: 'center',
     backgroundColor: '#E4E4E4',
-
   },
   column: {
     flex: 1, // Take equal space
@@ -156,6 +172,20 @@ const styles = StyleSheet.create({
   absentStudent: {
     fontSize: 16,
     marginBottom: 10,
+  },
+  // 출석 종료 버튼 스타일
+  attendanceEndButton: {
+    marginTop: 'auto', // marginTop을 'auto'로 설정하여 최대한 아래로 이동
+    marginBottom: 10, // marginBottom은 그대로 유지
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  
+  attendanceEndButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

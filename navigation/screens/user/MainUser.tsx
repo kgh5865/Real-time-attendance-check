@@ -106,12 +106,6 @@ export const MainUser = () => {
     <View style={styles.contentView}>
             <Text style={styles.subHeader}>스마트 출석부</Text>
             <View style={styles.buttonsContainer}>
-  <Text style={{ color: 'black', fontSize: 20 }}>{route.params?.stu_num}</Text>
-  <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_name}</Text>
-  <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_type}</Text>
-  <Text>{context.id}</Text>
-  <Text>{messageText}</Text>
-  <Text>{serverState}</Text>
   <View style={styles.rowView}>
     <Button
       title="출석현황"
@@ -211,7 +205,7 @@ export const MainUser = () => {
 
 const styles = StyleSheet.create({
   contentView: {
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
     flex: 1,
   },
   subHeader: {

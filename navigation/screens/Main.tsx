@@ -8,11 +8,7 @@ import { Auth } from 'aws-amplify';
 import axios from 'axios';
 
 type RootStackParam = {
-  Main: {
-    stu_num: string;
-    stu_name: string;
-    stu_type: string;
-  };
+  Main: undefined;
   MainAdmin: undefined;
   MainUser: undefined;
   List1: undefined;
@@ -20,11 +16,8 @@ type RootStackParam = {
   Subject: undefined;
 };
 
-type MainScreenRouteProp = RouteProp<RootStackParam, 'Main'>;
-
 const Main: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  const route = useRoute<MainScreenRouteProp>();
   const context = useContext(AppContext);//전역변수
 
   const [currentUser, setCurrentUser] = useState<any | null>(null);
@@ -70,18 +63,10 @@ const Main: React.FC = () => {
       const userArray = parsedBody.admin;
 
       if (userArray && userArray.length > 0) {
-        const firstUser = userArray[0];
-        console.log(firstUser.name);
-        context.setId(firstUser.admin_id);
-        context.setName(firstUser.name);
+        context.setId(userArray[0].admin_id);
+        context.setName(userArray[0].name);
+        context.setDepartment(userArray[0].department);
 
-        // const admin: AdminDataType = {
-        //   admin_id: firstUser.admin_id,
-        //   name: firstUser.name,
-        //   department: firstUser.department,
-        // };
-
-        // setadminData(admin);
       } else {
 
         console.error('람다 함수 응답에서 유효한 "admin" 데이터를 찾을 수 없습니다.');
@@ -119,19 +104,10 @@ const Main: React.FC = () => {
       const userArray = parsedBody.user;
 
       if (userArray && userArray.length > 0) {
-        const firstUser = userArray[0];
-        context.setId(firstUser.user_id);
-        context.setName(firstUser.name);
+        context.setId(userArray[0].user_id);
+        context.setName(userArray[0].name);
+        context.setDepartment(userArray[0].department);
         
-
-        // const user: UserDataType = {
-        //   user_id: firstUser.user_id,
-        //   name: firstUser.name,
-        //   department: firstUser.department,
-        // };
-
-        // console.log(user);
-        // setUserData(user);
       } else {
 
         console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
@@ -227,20 +203,6 @@ const Main: React.FC = () => {
 
       {/* 추가된 부분: 람다 함수 응답 및 사용자 데이터 화면에 표시 */}
       <View style={styles.userDataContainer}>
-        {/*userData && (
-          <>
-            <Text style={styles.userDataText}>user_id: {userData.user_id}</Text>
-            <Text style={styles.userDataText}>name: {userData.name}</Text>
-            <Text style={styles.userDataText}>department: {userData.department}</Text>
-          </>
-        )}
-        {adminData && (
-          <>
-            <Text style={styles.userDataText}>user_id: {adminData.admin_id}</Text>
-            <Text style={styles.userDataText}>name: {adminData.name}</Text>
-            <Text style={styles.userDataText}>department: {adminData.department}</Text>
-          </>
-        )*/}
       </View>
     </View>
   );
@@ -248,7 +210,7 @@ const Main: React.FC = () => {
 
 const styles = StyleSheet.create({
   contentView: {
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
     flex: 1,
   },
   subHeader: {
