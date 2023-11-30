@@ -71,6 +71,9 @@ const Main: React.FC = () => {
 
       if (userArray && userArray.length > 0) {
         const firstUser = userArray[0];
+        console.log(firstUser.name);
+        context.setId(firstUser.admin_id);
+        context.setName(firstUser.name);
 
         // const admin: AdminDataType = {
         //   admin_id: firstUser.admin_id,
@@ -118,6 +121,7 @@ const Main: React.FC = () => {
       if (userArray && userArray.length > 0) {
         const firstUser = userArray[0];
         context.setId(firstUser.user_id);
+        context.setName(firstUser.name);
         
 
         // const user: UserDataType = {

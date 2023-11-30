@@ -6,7 +6,7 @@ import awsExports from './src/aws-exports';
 import { Amplify } from 'aws-amplify';
 Amplify.configure(awsExports);
 import { withAuthenticator } from '@aws-amplify/ui-react-native';
-
+ 
 const App: React.FC = () => {
 
   return (

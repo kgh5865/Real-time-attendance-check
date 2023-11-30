@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AppContext from '../../../AppContext';
 
 export type RootStackParam = {
   MainAdmin: {
@@ -18,16 +19,24 @@ export type RootStackParam = {
 };
 
 
+
 export const MainAdmin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainAdmin'>>();
   const [serverState, setServerState] = useState('Loading...');
   const [messageText, setMessageText] = useState('ㅎㅎ');
+  const context = useContext(AppContext);//전역변수
 
   const webSocket = useRef<WebSocket | null>(null);
 
-  const absenceFunc = () => {
+  const absenceStart = () => {
     let str = JSON.stringify({message: "출석"});
+    webSocket.current?.send(str);
+
+    setMessageText('');
+  };
+  const absenceFin = () => {
+    let str = JSON.stringify({message: "종료"});
     webSocket.current?.send(str);
     setMessageText('');
   };
@@ -55,7 +64,6 @@ export const MainAdmin = () => {
       setMessageText(parse.serverMessage);
     };
 
-    
 
     return () => {
       if (webSocket.current) {
@@ -71,6 +79,7 @@ export const MainAdmin = () => {
         <Text style={{ color: 'black', fontSize: 20 }}>{route.params?.stu_num}</Text>
         <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_name}</Text>
         <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_type}</Text>
+        <Text>{context.name}</Text>
         <Text>{messageText}</Text>
         <Text>{serverState}</Text>
         <View style={styles.rowView}>
@@ -140,7 +149,8 @@ export const MainAdmin = () => {
               marginLeft: 60,
               marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
             }}
-            onPress={() => absenceFunc()/*navigation.navigate('Absence')*/}
+            onPress={() => absenceStart()/*navigation.navigate('Absence')*/}
+            onPressIn={()=>navigation.navigate('Absence')}
           />
           <Button
             title="종료"
@@ -162,7 +172,8 @@ export const MainAdmin = () => {
               marginRight: 60,
               marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
             }}
-            onPress={() => navigation.navigate('Absence')}
+            onPress={() => absenceFin()/*navigation.navigate('Absence')*/}
+            onPressIn={()=>navigation.navigate('Absence')}
           />
         </View>
       </View>

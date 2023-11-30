@@ -5,6 +5,7 @@ import AppContext from '../../../AppContext';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TouchID from 'react-native-touch-id';
+import Absence from '../admin/Absence';
 
 export type RootStackParam = {
   MainUser: {
@@ -17,26 +18,7 @@ export type RootStackParam = {
   Settings: undefined;
 };
 
-function touchFunc(){
-  TouchID.isSupported()
-      .then((supported) => {
-        if (supported) {
-          TouchID.authenticate('지문을 스캔해주세요')
-            .then((success: boolean) => {
-              if (success) {
-                Alert.alert('지문 인식 성공!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-              } else {
-                Alert.alert('지문 인식 실패!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-              }
-            })
-            .catch((error: Error) => {
-              console.log('지문 인식 오류', error);
-            });
-        } else {
-          Alert.alert('이 기기에서는 지문 인식을 지원하지 않습니다.'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-        }
-      });
-}
+
 
 export const MainUser = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
@@ -47,6 +29,35 @@ export const MainUser = () => {
   const [messageText, setMessageText] = useState('아직안받음');
 
   const webSocket = useRef<WebSocket | null>(null);
+
+  function touchFunc(){
+    TouchID.isSupported()
+        .then((supported) => {
+          if (supported) {
+            TouchID.authenticate('지문을 스캔해주세요')
+              .then((success: boolean) => {
+                if (success) {
+                  Alert.alert(`지문 인식 성공! ${context.name}`); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
+  
+                  let str = JSON.stringify({
+                    name: context.name,
+                    subj_id: "310037",
+                    subj_part: "13",
+
+                  });
+                  webSocket.current?.send(str);
+                } else {
+                  Alert.alert('지문 인식 실패!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
+                }
+              })
+              .catch((error: Error) => {
+                console.log('지문 인식 오류', error);
+              });
+          } else {
+            Alert.alert('이 기기에서는 지문 인식을 지원하지 않습니다.'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
+          }
+        });
+  }
 
   useEffect(() => {
     webSocket.current = new WebSocket('http://210.119.103.171:8080');
@@ -68,12 +79,22 @@ export const MainUser = () => {
 
     webSocket.current.onmessage = e => {//값 받기
       let parse = JSON.parse(e.data);
-      console.log(parse);
+      console.log(parse.message);
       setMessageText(parse.serverMessage);
+      
+      if (parse.message==="출석"){
+        Alert.alert('알림', '출석을 시작합니다', [
+     { text: '확인', onPress: () => touchFunc() },
+    ])};
+      if (parse.message==="종료"){
+        Alert.alert('알림', '출석을 종료합니다', [
+     { text: '확인', onPress: () => touchFunc() },
+   ]);
+   
+     }
+     
+
     };
-
-    
-
     return () => {
       if (webSocket.current) {
         (webSocket.current as WebSocket).close();

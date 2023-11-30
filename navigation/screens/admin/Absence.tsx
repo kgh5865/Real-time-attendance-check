@@ -1,28 +1,108 @@
-import React from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParam } from './MainAdmin';
+import { Auth } from 'aws-amplify';
+import axios from 'axios';
+import AppContext from '../../../AppContext';
 
 type AbsenceScreenRouteProp = RouteProp<RootStackParam, 'Absence'>;
 
 const Absence: React.FC = () => {
   const route = useRoute<AbsenceScreenRouteProp>();
+  const [serverState, setServerState] = useState<string>('');
+  const [absentStudents, setAbsentStudents] = useState<string[]>([]); // State to store absent students
+  const [attendanceStudents, setAttendanceStudents] = useState<string[]>([]);
+  const webSocket = useRef<WebSocket | null>(null);
+  const context = useContext(AppContext); // 전역변수
 
-  // Type guard to check if absentStudents and presentStudents are present in route.params
-  const absentStudents: string[] =
-    route.params && 'absentStudents' in route.params
-      ? (route.params as { absentStudents: string[] }).absentStudents
-      : [];
+  const invokeLambdaFunction = async () => {
+    try {
+      const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/getstudent';
 
-  const presentStudents: string[] =
-    route.params && 'presentStudents' in route.params
-      ? (route.params as { presentStudents: string[] }).presentStudents
-      : [];
+      const response = await axios.post(apiUrl, {
+        adminId: context.id,
+        subjId: "310037",
+        subjPart: "13"
+      });
+
+      // 응답 데이터 확인
+      console.log('람다 함수 응답 전체:', response.data);
+
+      // "user" 키 확인
+      if (response.data && response.data.body) {
+        const parsedBody = JSON.parse(response.data.body);
+
+        // "user" 배열 내의 요소들을 absentStudents에 추가
+        const users = parsedBody.data || [];
+        const absentStudentNames = users.map((user: { user_id: string, name: string }) => user.name);
+        setAbsentStudents(absentStudentNames);
+      } else {
+        console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('람다 함수 호출 중 오류:', error);
+    }
+  };
+
+  useEffect(() => {
+    invokeLambdaFunction();
+    webSocket.current = new WebSocket('http://210.119.103.171:8080');
+
+    // onopen event handler
+    webSocket.current.onopen = () => {
+      setServerState('Connected to the server');
+    };
+
+    // onerror event handler
+    webSocket.current.onerror = (e) => {
+      setServerState(e.message);
+    };
+
+    // onclose event handler
+    webSocket.current.onclose = (e) => {
+      setServerState('Disconnected. Check internet or server.');
+    };
+
+    webSocket.current.onmessage = (e) => {
+      // 값 받기
+      let parse = JSON.parse(e.data);
+
+      if (parse.subj_id === '310037' && parse.subj_part === '13') {
+        console.log(parse.name);
+
+        // 받아온 이름을 attendanceStudents에 추가
+      setAttendanceStudents((prevAttendanceStudents) => {
+        // attendanceStudents 배열에 이미 존재하지 않는 경우에만 추가
+        if (!prevAttendanceStudents.includes(parse.name)) {
+          // absentStudents 배열에서 해당 학생 제외
+          setAbsentStudents((prevAbsentStudents) =>
+            prevAbsentStudents.filter((student) => student !== parse.name)
+          );
+
+          return [...prevAttendanceStudents, parse.name];
+        }
+
+        return prevAttendanceStudents;
+      });
+      }
+      
+    };
+
+    // Cleanup function
+    return () => {
+      if (webSocket.current) {
+        (webSocket.current as WebSocket).close();
+      }
+    };
+  }, []);
+
+  // Empty dependency array means this effect runs once after initial render
 
   return (
     <View style={styles.container}>
-      <View style={styles.studentsContainer}>
+      <View style={styles.column}>
         <Text style={styles.header}>결석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
           {absentStudents.map((student, index) => (
@@ -32,14 +112,14 @@ const Absence: React.FC = () => {
           ))}
         </View>
       </View>
-      <View style={styles.studentsContainer}>
+      <View style={styles.column}>
         <Text style={styles.header}>출석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
-          {presentStudents.map((student, index) => (
-            <Text key={index} style={styles.absentStudent}>
-              {student}
-            </Text>
-          ))}
+        {attendanceStudents.map((student, index) => (
+          <Text key={index} style={styles.absentStudent}>
+            {student}
+          </Text>
+        ))}
         </View>
       </View>
     </View>
@@ -53,8 +133,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Add space around the columns
     alignItems: 'center',
     backgroundColor: '#E4E4E4',
+
   },
-  studentsContainer: {
+  column: {
     flex: 1, // Take equal space
     justifyContent: 'center',
     alignItems: 'center',
