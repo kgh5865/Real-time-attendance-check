@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { UserDataType, AdminDataType } from '../../userdata';
 import { Auth } from 'aws-amplify';
 import axios from 'axios';
 
@@ -26,7 +25,7 @@ const Subject: React.FC = () => {
 
   const [currentUser, setCurrentUser] = useState<any | null>(null);
   const [lambdaResponse, setLambdaResponse] = useState<string>('');
-  const [userData, setUserData] = useState<UserDataType | null>(null);
+  //const [userData, setUserData] = useState<UserDataType | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchUserAndInvokeLambda = async () => {
@@ -70,7 +69,7 @@ const Subject: React.FC = () => {
   
         if (userArray && userArray.length > 0) {
           const firstUser = userArray[0];
-          setUserData(firstUser);
+          // setUserData(firstUser);
         } else {
           console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
         }
@@ -101,13 +100,13 @@ const Subject: React.FC = () => {
 
   return (
     <View style={styles.userDataContainer}>
-      {userData && (
+      {/*userData && (
         <>
           <Text style={styles.userDataText}>학번: {userData.user_id}</Text>
           <Text style={styles.userDataText}>이름: {userData.name}</Text>
           <Text style={styles.userDataText}>학과: {userData.department}</Text>
         </>
-      )}
+      )*/}
     </View>
   );
 };

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { View, ScrollView, StyleSheet, Alert, ImageBackground } from 'react-native';
 import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
+import AppContext from '../../../AppContext';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TouchID from 'react-native-touch-id';
@@ -40,6 +41,45 @@ function touchFunc(){
 export const MainUser = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainUser'>>();
+  const context = useContext(AppContext);//전역변수
+  
+  const [serverState, setServerState] = useState('Loading...');
+  const [messageText, setMessageText] = useState('아직안받음');
+
+  const webSocket = useRef<WebSocket | null>(null);
+
+  useEffect(() => {
+    webSocket.current = new WebSocket('http://210.119.103.171:8080');
+
+    // onopen event handler
+    webSocket.current.onopen = () => {
+      setServerState('Connected to the server');
+    };
+
+    // onerror event handler
+    webSocket.current.onerror = (e) => {
+      setServerState(e.message);
+    };
+
+    // onclose event handler
+    webSocket.current.onclose = (e) => {
+      setServerState('Disconnected. Check internet or server.');
+    };
+
+    webSocket.current.onmessage = e => {//값 받기
+      let parse = JSON.parse(e.data);
+      console.log(parse);
+      setMessageText(parse.serverMessage);
+    };
+
+    
+
+    return () => {
+      if (webSocket.current) {
+        (webSocket.current as WebSocket).close();
+      }
+    };
+  }, []);
 
   return (
     <View style={styles.contentView}>
@@ -48,6 +88,9 @@ export const MainUser = () => {
   <Text style={{ color: 'black', fontSize: 20 }}>{route.params?.stu_num}</Text>
   <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_name}</Text>
   <Text style={{ color: 'black', fontSize: 17 }}>{route.params?.stu_type}</Text>
+  <Text>{context.id}</Text>
+  <Text>{messageText}</Text>
+  <Text>{serverState}</Text>
   <View style={styles.rowView}>
     <Button
       title="출석현황"

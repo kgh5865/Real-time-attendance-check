@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { UserDataType, AdminDataType } from '../userdata';
+import AppContext from '../../AppContext';
 import { Auth } from 'aws-amplify';
 import axios from 'axios';
 
@@ -25,11 +25,12 @@ type MainScreenRouteProp = RouteProp<RootStackParam, 'Main'>;
 const Main: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<MainScreenRouteProp>();
+  const context = useContext(AppContext);//전역변수
 
   const [currentUser, setCurrentUser] = useState<any | null>(null);
   const [lambdaResponse, setLambdaResponse] = useState<string>('');//람다 함수 응답
-  const [userData, setUserData] = useState<UserDataType | null>(null);
-  const [adminData, setadminData] = useState<AdminDataType | null>(null);
+  // const [userData, setUserData] = useState<UserDataType | null>(null);
+  // const [adminData, setadminData] = useState<AdminDataType | null>(null);
 
   const fetchUserAndInvokeLambda = async () => {
     try {
@@ -71,13 +72,13 @@ const Main: React.FC = () => {
       if (userArray && userArray.length > 0) {
         const firstUser = userArray[0];
 
-        const admin: AdminDataType = {
-          admin_id: firstUser.admin_id,
-          name: firstUser.name,
-          department: firstUser.department,
-        };
+        // const admin: AdminDataType = {
+        //   admin_id: firstUser.admin_id,
+        //   name: firstUser.name,
+        //   department: firstUser.department,
+        // };
 
-        setadminData(admin);
+        // setadminData(admin);
       } else {
 
         console.error('람다 함수 응답에서 유효한 "admin" 데이터를 찾을 수 없습니다.');
@@ -105,7 +106,7 @@ const Main: React.FC = () => {
       });
   
       // 응답 데이터 확인
-      console.log('람다 함수 응답 전체:', response.data.user);
+      console.log('람다 함수 응답 전체:', response.data);
   
       // "user" 키 확인
     if (response.data && response.data.body) {
@@ -116,15 +117,17 @@ const Main: React.FC = () => {
 
       if (userArray && userArray.length > 0) {
         const firstUser = userArray[0];
+        context.setId(firstUser.user_id);
+        
 
-        const user: UserDataType = {
-          user_id: firstUser.user_id,
-          name: firstUser.name,
-          department: firstUser.department,
-        };
+        // const user: UserDataType = {
+        //   user_id: firstUser.user_id,
+        //   name: firstUser.name,
+        //   department: firstUser.department,
+        // };
 
-        console.log(user);
-        setUserData(user);
+        // console.log(user);
+        // setUserData(user);
       } else {
 
         console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
@@ -220,7 +223,7 @@ const Main: React.FC = () => {
 
       {/* 추가된 부분: 람다 함수 응답 및 사용자 데이터 화면에 표시 */}
       <View style={styles.userDataContainer}>
-        {userData && (
+        {/*userData && (
           <>
             <Text style={styles.userDataText}>user_id: {userData.user_id}</Text>
             <Text style={styles.userDataText}>name: {userData.name}</Text>
@@ -233,7 +236,7 @@ const Main: React.FC = () => {
             <Text style={styles.userDataText}>name: {adminData.name}</Text>
             <Text style={styles.userDataText}>department: {adminData.department}</Text>
           </>
-        )}
+        )*/}
       </View>
     </View>
   );
