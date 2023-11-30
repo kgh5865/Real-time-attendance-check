@@ -1,7 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Main2 }  from './screens/user/Main';
-import { Main }   from './screens/Main';
-import List from './screens/user/Subject'; // 대문자로 시작해야 합니다
+import { MainUser }    from './screens/user/MainUser';
+import MainAdmin  from './screens/admin/MainAdmin'
+import  Main    from './screens/Main';
+import Userinfor from './screens/user/Userinfor'
+import AdminInfor from './screens/admin/AdminInfor';
+import Adminstudent from './screens/admin/Adminstudent';
+import Absence  from './screens/admin/Absence'
+import UserSubject from './screens/user/UserSubject'; // 대문자로 시작해야 합니다
 import List1 from './screens/List1';
 import List2 from './screens/List2';
 import List3 from './screens/List3';
@@ -14,11 +19,16 @@ export default function StackContainer() {
   return (
     <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={Main} />
-      <Stack.Screen name="Main2" component={Main2} />
-      <Stack.Screen name="List" component={List} />
+      <Stack.Screen name="MainUser" component={MainUser} />
+      <Stack.Screen name="MainAdmin" component={MainAdmin} />
+      <Stack.Screen name="Userinfor" component={Userinfor} />
+      <Stack.Screen name="AdminInfor" component={AdminInfor} />
+      <Stack.Screen name="UserSubject" component={UserSubject} />
+      <Stack.Screen name="Adminstudent" component={Adminstudent} />
       <Stack.Screen name="List1" component={List1} />
       <Stack.Screen name="List2" component={List2} />
       <Stack.Screen name="List3" component={List3} />
+      <Stack.Screen name="Absence" component={Absence} />
       <Stack.Screen name="Settings" component={Settings} />
          <Stack.Screen name="Logout" component={Logout} />
       {/* 추가 스크린은 여기에 계속해서 등록하면 됩니다. */}

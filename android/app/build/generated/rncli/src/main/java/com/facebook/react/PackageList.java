@@ -17,6 +17,10 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 // amazon-cognito-identity-js
 import com.amazonaws.RNAWSCognitoPackage;
+// react-native-ble-manager
+import it.innove.BleManagerPackage;
+// react-native-ble-plx
+import com.bleplx.BlePlxPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -73,6 +77,8 @@ public class PackageList {
       new AsyncStoragePackage(),
       new NetInfoPackage(),
       new RNAWSCognitoPackage(),
+      new BleManagerPackage(),
+      new BlePlxPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new FingerprintAuthPackage(),

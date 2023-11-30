@@ -3284,6 +3284,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\NLab\\Desktop\\k1\\Real-time-attendance-check\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
+                    "from": {
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "159,265",
+                        "endColumns": "63,68",
+                        "endOffsets": "218,329"
+                    },
+                    "to": {
+                        "startLines": "1844,1845",
+                        "startColumns": "4,4",
+                        "startOffsets": "123090,123154",
+                        "endColumns": "63,68",
+                        "endOffsets": "123149,123218"
+                    }
+                },
+                {
                     "source": "C:\\Users\\NLab\\.gradle\\caches\\transforms-3\\d9be3a8e87333c5c5f406cc5515878e5\\transformed\\swiperefreshlayout-1.1.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -3432,24 +3449,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
-                    "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "159,265",
-                        "endColumns": "63,68",
-                        "endOffsets": "218,329"
-                    },
-                    "to": {
-                        "startLines": "1844,1845",
-                        "startColumns": "4,4",
-                        "startOffsets": "123090,123154",
-                        "endColumns": "63,68",
-                        "endOffsets": "123149,123218"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "C:\\Users\\NLab\\Desktop\\k1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
@@ -3465,6 +3465,23 @@
                         "endLines": "2108",
                         "endColumns": "12",
                         "endOffsets": "153085"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\NLab\\Desktop\\k1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "17",
+                        "endColumns": "45",
+                        "endOffsets": "58"
+                    },
+                    "to": {
+                        "startLines": "1881",
+                        "startColumns": "4",
+                        "startOffsets": "125692",
+                        "endColumns": "45",
+                        "endOffsets": "125733"
                     }
                 },
                 {
@@ -3537,23 +3554,6 @@
                         "startOffsets": "118526",
                         "endColumns": "59",
                         "endOffsets": "118581"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\NLab\\Desktop\\cp1\\Real-time-attendance-check\\android\\app\\src\\main\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "17",
-                        "endColumns": "45",
-                        "endOffsets": "58"
-                    },
-                    "to": {
-                        "startLines": "1881",
-                        "startColumns": "4",
-                        "startOffsets": "125692",
-                        "endColumns": "45",
-                        "endOffsets": "125733"
                     }
                 },
                 {
