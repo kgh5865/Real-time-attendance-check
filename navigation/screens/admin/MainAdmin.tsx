@@ -16,6 +16,7 @@ export type RootStackParam = {
   Main: undefined;
   Settings: undefined;
   Absence: undefined;
+  Absence2: undefined;
 };
 
 
@@ -24,7 +25,6 @@ export const MainAdmin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainAdmin'>>();
   const [serverState, setServerState] = useState('Loading...');
-  const [messageText, setMessageText] = useState('ㅎㅎ');
   const context = useContext(AppContext);//전역변수
 
   const webSocket = useRef<WebSocket | null>(null);
@@ -32,13 +32,11 @@ export const MainAdmin = () => {
   const absenceStart = () => {
     let str = JSON.stringify({message: "출석"});
     webSocket.current?.send(str);
-
-    setMessageText('');
   };
+
   const absenceFin = () => {
     let str = JSON.stringify({message: "종료"});
     webSocket.current?.send(str);
-    setMessageText('');
   };
 
   useEffect(() => {
@@ -61,7 +59,6 @@ export const MainAdmin = () => {
 
     webSocket.current.onmessage = e => {//값 받기
       let parse = JSON.parse(e.data);
-      setMessageText(parse.serverMessage);
     };
 
 
@@ -167,7 +164,7 @@ export const MainAdmin = () => {
               marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
             }}
             onPress={() => absenceFin()/*navigation.navigate('Absence')*/}
-            onPressIn={()=>navigation.navigate('Absence')}
+            onPressIn={()=>navigation.navigate('Absence2')}
           />
         </View>
       </View>

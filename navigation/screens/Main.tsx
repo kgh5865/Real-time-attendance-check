@@ -127,6 +127,10 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     fetchUserAndInvokeLambda();
+
+    //임의로 과목코드, 분반 추가
+    context.setSubjPart('13');
+    context.setSubjId('310037');
   }, []);
 
   const handleStudentPress = () => {

@@ -231,14 +231,8 @@ const Absence: React.FC = () => {
       <ScrollView contentContainerStyle={styles.column}>
         <Text style={styles.header}>결석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
-          {absentStudents.map((student, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.studentClickable} // 추가: 클릭 가능한 스타일
-              onPress={() => handleStudentClick(student)} // 추가: 클릭 시 핸들러 호출
-            >
-              <Text style={styles.absentStudent}>{student}</Text>
-            </TouchableOpacity>
+          {absentStudents.map((student, index) => (           
+              <Text key={index} style={styles.absentStudent}>{student}</Text>
           ))}
         </View>
       </ScrollView>
@@ -254,9 +248,9 @@ const Absence: React.FC = () => {
         </View>
       </ScrollView>
 
-      {/* 출석 종료 버튼 */}
+      {/* 강의 종료 버튼 */}
       <TouchableOpacity style={styles.attendanceEndButton} onPress={handleAttendanceEnd}>
-        <Text style={styles.attendanceEndButtonText}>출석 종료</Text>
+        <Text style={styles.attendanceEndButtonText}>강의 종료</Text>
       </TouchableOpacity>
     </View>
   );
@@ -283,7 +277,7 @@ const styles = StyleSheet.create({
   absentStudentsContainer: {
     width: '80%',
     padding: 10,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
@@ -292,11 +286,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  // 출석 종료 버튼 스타일
+  // 강의 종료 버튼 스타일
   attendanceEndButton: {
     marginTop: 'auto', // marginTop을 'auto'로 설정하여 최대한 아래로 이동
     marginBottom: 10, // marginBottom은 그대로 유지
-    backgroundColor: 'blue',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 5,
   },
