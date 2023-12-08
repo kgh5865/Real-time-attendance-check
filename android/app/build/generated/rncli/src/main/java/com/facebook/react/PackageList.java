@@ -25,6 +25,8 @@ import com.swmansion.rnscreens.RNScreensPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 // react-native-vector-icons
 import com.oblador.vectoricons.VectorIconsPackage;
+// react-native-wifi-reborn
+import com.reactlibrary.rnwifi.RNWifiPackage;
 
 public class PackageList {
   private Application application;
@@ -76,7 +78,8 @@ public class PackageList {
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new FingerprintAuthPackage(),
-      new VectorIconsPackage()
+      new VectorIconsPackage(),
+      new RNWifiPackage()
     ));
   }
 }

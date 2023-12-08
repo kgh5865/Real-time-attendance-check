@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 const { width } = Dimensions.get('window');
+import { Icon } from '@rneui/base';
+import { useNavigation } from '@react-navigation/native';
+
 const Home = () => {
+  const navigation = useNavigation();
   const signOut = async () => {
     try {
       await Auth.signOut({ global: true });
@@ -11,31 +15,37 @@ const Home = () => {
     }
   };
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.header}>
-        <Text style={styles.headerText}>로그인 페이지로 돌아가기</Text>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <Icon name='arrow-left' size={24} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.headerTitle}>로그아웃</Text>
         <Pressable style={styles.button} onPress={() => signOut()}>
-          <Text style={styles.buttonText}>Sign Out</Text>
+          <Text style={styles.buttonText}>Log Out</Text>
         </Pressable>
       </View>
-    </View>
+    </>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
-    paddingVertical: 20,
+    flex: 1
   },
   header: {
-    display: 'flex',
-    padding: 20,
-    width: width,
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#FF0000',
   },
-  headerText: {
+  headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
   },

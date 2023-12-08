@@ -45,7 +45,7 @@ const Main: React.FC = () => {
     try {
       const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/getadminname';
       const userEmail = user.attributes?.email;
-  
+
       const response = await axios.post(apiUrl, {
         email: userEmail,
       });
@@ -54,71 +54,71 @@ const Main: React.FC = () => {
 
       // 응답 데이터 확인
       console.log('람다 함수 응답 전체:', response.data);
-  
+
       // "user" 키 확인
-    if (response.data && response.data.body) {
-      const parsedBody = JSON.parse(response.data.body);
+      if (response.data && response.data.body) {
+        const parsedBody = JSON.parse(response.data.body);
 
-      // "user" 배열 내의 첫 번째 요소에 직접 접근
-      const userArray = parsedBody.admin;
+        // "user" 배열 내의 첫 번째 요소에 직접 접근
+        const userArray = parsedBody.admin;
 
-      if (userArray && userArray.length > 0) {
-        context.setId(userArray[0].admin_id);
-        context.setName(userArray[0].name);
-        context.setDepartment(userArray[0].department);
+        if (userArray && userArray.length > 0) {
+          context.setId(userArray[0].admin_id);
+          context.setName(userArray[0].name);
+          context.setDepartment(userArray[0].department);
 
+        } else {
+
+          console.error('람다 함수 응답에서 유효한 "admin" 데이터를 찾을 수 없습니다.');
+        }
       } else {
-
-        console.error('람다 함수 응답에서 유효한 "admin" 데이터를 찾을 수 없습니다.');
+        console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
       }
-    } else {
-      console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
-    }
 
-    const responseBody = response.data.body;
-    return responseBody;
+      const responseBody = response.data.body;
+      return responseBody;
     }
     catch (error) {
-    console.error('람다 함수 호출 중 오류:', error);
-    return ''; // 에러가 발생한 경우 빈 문자열 반환
-  }
+      console.error('람다 함수 호출 중 오류:', error);
+      return ''; // 에러가 발생한 경우 빈 문자열 반환
+    }
   }
 
   const invokeLambdaFunction = async (user: any): Promise<string> => {
     try {
       const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/getusername';
       const userEmail = user.attributes?.email;
-  
+
       const response = await axios.post(apiUrl, {
         email: userEmail,
       });
-  
+
       // 응답 데이터 확인
       console.log('람다 함수 응답 전체:', response.data);
-  
+
       // "user" 키 확인
-    if (response.data && response.data.body) {
-      const parsedBody = JSON.parse(response.data.body);
+      if (response.data && response.data.body) {
+        const parsedBody = JSON.parse(response.data.body);
 
-      // "user" 배열 내의 첫 번째 요소에 직접 접근
-      const userArray = parsedBody.user;
+        // "user" 배열 내의 첫 번째 요소에 직접 접근
+        const userArray = parsedBody.user;
 
-      if (userArray && userArray.length > 0) {
-        context.setId(userArray[0].user_id);
-        context.setName(userArray[0].name);
-        context.setDepartment(userArray[0].department);
-        
+        if (userArray && userArray.length > 0) {
+          context.setId(userArray[0].user_id);
+          context.setName(userArray[0].name);
+          context.setDepartment(userArray[0].department);
+
+        } else {
+
+          console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
+          invokeLambdaFunctionAdmin(user);
+        }
       } else {
-
-        console.log('람다 함수 응답에서 유효한 "user" 데이터를 찾을 수 없습니다.');
-        invokeLambdaFunctionAdmin(user);
+        console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
       }
-    } else {
-      console.error('람다 함수 응답에서 유효한 "body" 데이터를 찾을 수 없습니다.');
-    }
 
-    const responseBody = response.data.body;
-    return responseBody;
+      const responseBody = response.data.body;
+      return responseBody;
     } catch (error) {
       console.error('람다 함수 호출 중 오류:', error);
       return ''; // 에러가 발생한 경우 빈 문자열 반환
@@ -136,22 +136,22 @@ const Main: React.FC = () => {
   const handleStudentPress = () => {
     if (currentUser && currentUser.attributes?.sub !== 'c97c8114-6021-4f95-b5fe-6c03f71f3f7b') {
       console.log('학생');
-      Alert.alert('알림', '학생');
+      Alert.alert('알림', '승인 되었습니다');
       navigation.navigate('MainUser');
     } else {
       console.log('교수');
-      Alert.alert('알림', '교수는 학생 섹션에 접근할 수 없습니다');
+      Alert.alert('알림', '접근이 불가능 합니다.');
     }
   };
 
   const handleProfessorPress = () => {
     if (currentUser && currentUser.attributes?.sub === 'c97c8114-6021-4f95-b5fe-6c03f71f3f7b') {
       console.log('교수');
-      Alert.alert('알림', '교수');
+      Alert.alert('알림', '승인 되었습니다.');
       navigation.navigate('MainAdmin');
     } else {
       console.log('학생');
-      Alert.alert('알림', '학생은 교수 섹션에 접근할 수 없습니다');
+      Alert.alert('알림', '권한이 없습니다.');
     }
   };
 
@@ -173,6 +173,7 @@ const Main: React.FC = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,
@@ -194,6 +195,7 @@ const Main: React.FC = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,
@@ -203,10 +205,6 @@ const Main: React.FC = () => {
             onPress={handleProfessorPress}
           />
         </View>
-      </View>
-
-      {/* 추가된 부분: 람다 함수 응답 및 사용자 데이터 화면에 표시 */}
-      <View style={styles.userDataContainer}>
       </View>
     </View>
   );

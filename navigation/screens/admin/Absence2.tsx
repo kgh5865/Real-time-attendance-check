@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import {  NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, TouchableWithoutFeedback } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import axios from 'axios';
 import AppContext from '../../../AppContext';
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from '@rneui/base';
 
 
 type RootStackParam = {
@@ -126,7 +127,7 @@ const Absence: React.FC = () => {
         subj_part: '13',
         week: '4',
         period: '1',
-        start: '0',
+        finish: '1',
         users: item
       });
 
@@ -146,10 +147,10 @@ const Absence: React.FC = () => {
 
     
     Alert.alert(
-      '강의 종료 안내',
-      '강의 종료 시에는 "출석 종료" 버튼을 눌러주세요.',
+      '강의 종료',
+      '강의 종료 데이터가 출결 DB에 저장',
       [
-        { text: '확인', onPress: () => console.log('강의 종료 안내 확인 버튼 눌림') },
+        { text: '확인', onPress: () => console.log('강의 종료 눌림') },
       ],
       { cancelable: false }
     );
@@ -226,33 +227,60 @@ const Absence: React.FC = () => {
       return prevAttendanceStudents;
     });
   };
-  return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.column}>
-        <Text style={styles.header}>결석 학생 목록</Text>
-        <View style={styles.absentStudentsContainer}>
-          {absentStudents.map((student, index) => (           
-              <Text key={index} style={styles.absentStudent}>{student}</Text>
-          ))}
-        </View>
-      </ScrollView>
+  const moveStudentToAbsentList = (studentName: string) => {
+    // 결석 목록에 추가
+    setAbsentStudents((prevAbsentStudents) => [...prevAbsentStudents, studentName]);
 
-      <ScrollView contentContainerStyle={styles.column}>
+    // 출석 목록에서 제거
+    setAttendanceStudents((prevAttendanceStudents) =>
+      prevAttendanceStudents.filter((student) => student !== studentName)
+    );
+  };
+
+  return (
+    <>
+     <View style={styles.header2}>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" size={24} />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.column}>
+          <Text style={styles.header}>결석 학생 목록</Text>
+          <View style={styles.absentStudentsContainer}>
+            {absentStudents.map((student, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.studentClickable} // 추가: 클릭 가능한 스타일
+                onPress={() => handleStudentClick(student)} // 추가: 클릭 시 핸들러 호출
+              >
+                <Text style={styles.absentStudent}>{student}</Text>
+              </TouchableOpacity>
+            ))}
+            </View>
+            </ScrollView>
+          
+          <ScrollView contentContainerStyle={styles.column}>
         <Text style={styles.header}>출석 학생 목록</Text>
         <View style={styles.absentStudentsContainer}>
           {attendanceStudents.map((student, index) => (
-            <Text key={index} style={styles.absentStudent}>
-              {student}
-            </Text>
+            <TouchableOpacity
+              key={index}
+              style={styles.studentClickable}
+              onPress={() => moveStudentToAbsentList(student)}
+            >
+              <Text style={styles.absentStudent}>{student}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
+      </View>
 
       {/* 강의 종료 버튼 */}
       <TouchableOpacity style={styles.attendanceEndButton} onPress={handleAttendanceEnd}>
         <Text style={styles.attendanceEndButtonText}>강의 종료</Text>
       </TouchableOpacity>
-    </View>
+    </>
   );
 };
 
@@ -277,7 +305,7 @@ const styles = StyleSheet.create({
   absentStudentsContainer: {
     width: '80%',
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#F78181',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
@@ -285,16 +313,19 @@ const styles = StyleSheet.create({
   absentStudent: {
     fontSize: 16,
     marginBottom: 10,
+    color: 'black'
   },
   // 강의 종료 버튼 스타일
   attendanceEndButton: {
     marginTop: 'auto', // marginTop을 'auto'로 설정하여 최대한 아래로 이동
-    marginBottom: 10, // marginBottom은 그대로 유지
+    marginBottom: 40,  // marginBottom은 그대로 유지
+    marginRight: 40,
+    marginLeft: 40,
     backgroundColor: 'red',
     padding: 10,
     borderRadius: 5,
+    alignItems: 'center'
   },
-  
   attendanceEndButtonText: {
     color: 'white',
     fontSize: 18,
@@ -305,6 +336,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#e0e0e0',
     marginVertical: 5,
+  },
+  header2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#FF0040',
   },
 });
 

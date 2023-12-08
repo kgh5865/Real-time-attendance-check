@@ -11,12 +11,12 @@ export type RootStackParam = {
     stu_name: string;
     stu_type: string;
   };
-  Subject: undefined;
-  List1: undefined;
   Main: undefined;
-  Settings: undefined;
+  AdminSettings: undefined;
   Absence: undefined;
   Absence2: undefined;
+  AdminChat:undefined;
+  AdminSubject:undefined;
 };
 
 
@@ -25,6 +25,7 @@ export const MainAdmin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainAdmin'>>();
   const [serverState, setServerState] = useState('Loading...');
+  const [messageText, setMessageText] = useState('');
   const context = useContext(AppContext);//전역변수
 
   const webSocket = useRef<WebSocket | null>(null);
@@ -32,11 +33,13 @@ export const MainAdmin = () => {
   const absenceStart = () => {
     let str = JSON.stringify({message: "출석"});
     webSocket.current?.send(str);
-  };
 
+    setMessageText('');
+  };
   const absenceFin = () => {
     let str = JSON.stringify({message: "종료"});
     webSocket.current?.send(str);
+    setMessageText('');
   };
 
   useEffect(() => {
@@ -59,6 +62,7 @@ export const MainAdmin = () => {
 
     webSocket.current.onmessage = e => {//값 받기
       let parse = JSON.parse(e.data);
+      setMessageText(parse.serverMessage);
     };
 
 
@@ -87,6 +91,7 @@ export const MainAdmin = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,
@@ -94,7 +99,7 @@ export const MainAdmin = () => {
               marginLeft: 60,
             }}
 
-            onPress={() => navigation.navigate('Subject')}
+            onPress={() => navigation.navigate('AdminSubject')}
 
           />
           <Button
@@ -110,13 +115,14 @@ export const MainAdmin = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,
               width: 100,
               marginRight: 60,
             }}
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() => navigation.navigate('AdminSettings')}
           />
         </View>
         <View style={styles.rowView}>
@@ -133,6 +139,7 @@ export const MainAdmin = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,
@@ -156,6 +163,7 @@ export const MainAdmin = () => {
               fontSize: 15,
               paddingTop: 30,
               paddingBottom: 30,
+              color: 'black'
             }}
             containerStyle={{
               height: 100,

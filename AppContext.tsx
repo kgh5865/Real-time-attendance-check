@@ -1,3 +1,5 @@
+// AppContext.tsx
+
 import React, { createContext, useState } from "react";
 
 interface AppContextType {
@@ -17,6 +19,17 @@ interface AppContextType {
   setSubjPart: (part: string) => void;
   subj_id: string;
   setSubjId: (id: string) => void;
+  adminId: string;
+  setAdminId: (id: string) => void;
+
+  // 추가된 부분
+  start: string;
+  setStart: (start: string) => void;
+  users: any[]; // any는 실제 타입에 맞게 변경해야 합니다.
+  setUsers: (users: any[]) => void;
+  wifiDelay: number;
+  attendanceStart: boolean;
+  setAttdStart: (start: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType>({
@@ -36,6 +49,15 @@ const AppContext = createContext<AppContextType>({
   setSubjPart: () => {},
   subj_id: "",
   setSubjId: () => {},
+  adminId: "",
+  setAdminId: () => {},
+  start: "",
+  setStart: () => {},
+  users: [],
+  setUsers: () => {},
+  wifiDelay: 10000,//5분 : 300000
+  attendanceStart: false,
+  setAttdStart: () => {},
 });
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -47,6 +69,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [period, setPeriodState] = useState(0);
   const [subj_part, setSubjPartState] = useState("");
   const [subj_id, setSubjIdState] = useState("");
+  const [adminId, setAdminIdState] = useState("");
+
+  const [wifiDelay, setWifiDelay] = useState(10000);
+  const [attendanceStart, setAttendanceStart] = useState<boolean>(false);
+  // 추가된 부분
+  const [start, setStartState] = useState("");
+  const [users, setUsersState] = useState<any[]>([]);
 
   const setName = (str: string) => {
     setNameState(str);
@@ -80,6 +109,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSubjIdState(id);
   };
 
+  const setAdminId = (id: string) => {
+    setAdminIdState(id);
+  };
+
+  // 추가된 부분
+  const setStart = (str: string) => {
+    setStartState(str);
+  };
+
+  const setUsers = (userList: any[]) => {
+    setUsersState(userList);
+    
+  };
+  const setAttdStart = (start: boolean) => {
+    setAttendanceStart(start);
+  };
+
   const values: AppContextType = {
     name,
     setName,
@@ -97,6 +143,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSubjPart,
     subj_id,
     setSubjId,
+    adminId,
+    setAdminId,
+    start,
+    setStart,
+    users,
+    setUsers,
+    wifiDelay,
+    attendanceStart,
+    setAttdStart,
   };
 
   return (

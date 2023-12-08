@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mainview.app-mergeDebugResources-35:/values/values.xml",
+            "outputFile": "com.mainview.app-mergeDebugResources-36:/values/values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\NLab\\.gradle\\caches\\transforms-3\\620147001f23a61fa54dd66c3890cad2\\transformed\\jetified-react-android-0.72.6-debug\\res\\values\\values.xml",

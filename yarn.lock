@@ -8010,7 +8010,12 @@ react-native-vector-icons@^10.0.1, react-native-vector-icons@>7.0.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.63.4", react-native@>=0.56, react-native@>=0.59, react-native@0.72.6:
+react-native-wifi-reborn@^4.10.1:
+  version "4.10.1"
+  resolved "https://registry.npmjs.org/react-native-wifi-reborn/-/react-native-wifi-reborn-4.10.1.tgz"
+  integrity sha512-4VIt/tHnLyecWMAIuwMhbo54JpYfveukhyWUIZTPWKUVlh2Bj0u9LWYhoraI7sIR3Ua3upAj3MaOVNouuNEgBg==
+
+react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.63.4", react-native@>=0.13, react-native@>=0.56, react-native@>=0.59, react-native@0.72.6:
   version "0.72.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.6.tgz"
   integrity sha512-RafPY2gM7mcrFySS8TL8x+TIO3q7oAlHpzEmC7Im6pmXni6n1AuufGaVh0Narbr1daxstw7yW7T9BKW5dpVc2A==
