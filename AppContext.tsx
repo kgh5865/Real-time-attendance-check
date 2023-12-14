@@ -55,7 +55,7 @@ const AppContext = createContext<AppContextType>({
   setStart: () => { },
   users: [],
   setUsers: () => { },
-  wifiDelay: 10000,//5분 : 300000
+  wifiDelay: 15000,//5분 : 300000
   attendanceStart: false,
   setAttdStart: () => { },
   apiUrl: "",
@@ -72,7 +72,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [subj_id, setSubjIdState] = useState("");
   const [adminId, setAdminIdState] = useState("");
 
-  const [wifiDelay, setWifiDelay] = useState(10000);
+  const [wifiDelay, setWifiDelay] = useState(15000);
   const [attendanceStart, setAttendanceStart] = useState<boolean>(false);
   // 추가된 부분
   const [start, setStartState] = useState("");

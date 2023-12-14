@@ -1,23 +1,203 @@
 [
     {
-        "merged": "com.mainview.app-merged_res-38:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.mainview.app-main-40:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_heart.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_heart.png"
     },
     {
-        "merged": "com.mainview.app-merged_res-38:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.mainview.app-main-40:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.mainview.app-merged_res-38:/drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-hdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.mainview.app-merged_res-38:/drawable_rn_edit_text_material.xml.flat",
-        "source": "com.mainview.app-main-40:/drawable/rn_edit_text_material.xml"
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_bell.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_bell.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_copy.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_copy.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_airbnbstar.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_airbnbstar.png"
     },
     {
         "merged": "com.mainview.app-merged_res-38:/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "com.mainview.app-main-40:/mipmap-xhdpi/ic_launcher.png"
     },
     {
+        "merged": "com.mainview.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.mainview.app-main-40:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_error.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_error.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.mainview.app-main-40:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_close.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_close.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\drawable_rn_edit_text_material.xml.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\drawable\\rn_edit_text_material.xml"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_error.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_error.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_copy.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_copy.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_close.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_close.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_close.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_close.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxfilled.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_amazonlogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityoff.png"
+    },
+    {
         "merged": "com.mainview.app-merged_res-38:/mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "com.mainview.app-main-40:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_checkboxoutline.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.mainview.app-main-40:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_applelogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_googlelogo.png"
     },
     {
         "merged": "com.mainview.app-merged_res-38:/mipmap-mdpi_ic_launcher.png.flat",
@@ -28,19 +208,59 @@
         "source": "com.mainview.app-main-40:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.mainview.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.mainview.app-main-40:/mipmap-xxxhdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "com.mainview.app-merged_res-38:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.mainview.app-main-40:/mipmap-hdpi/ic_launcher.png"
-    },
-    {
         "merged": "com.mainview.app-merged_res-38:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.mainview.app-main-40:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
         "merged": "com.mainview.app-merged_res-38:/mipmap-xhdpi_ic_launcher_round.png.flat",
         "source": "com.mainview.app-main-40:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xxxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_rocket.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_rocket.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_star.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_star.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.mainview.app-main-40:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_error.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_error.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_reactnativeratings_dist_images_airbnbstarselected.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_reactnativeratings_dist_images_airbnbstarselected.png"
+    },
+    {
+        "merged": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-merged_res-38:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\NLab\\.gradle\\daemon\\8.0.1\\com.mainview.app-main-40:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-mdpi_node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-mdpi/node_modules_awsamplify_uireactnative_src_assets_icons_visibilityon.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_facebooklogo.png"
+    },
+    {
+        "merged": "com.mainview.app-merged_res-38:/drawable-xhdpi_node_modules_awsamplify_uireactnative_src_assets_icons_copy.png.flat",
+        "source": "com.mainview.app-main-40:/drawable-xhdpi/node_modules_awsamplify_uireactnative_src_assets_icons_copy.png"
     }
 ]
