@@ -10,7 +10,7 @@ import  AdminSubject  from './screens/admin/AdminSubject';
 import { UserSettings } from './screens/user/UserSettings';
 import Logout from './screens/Logout';
 import UserInfo from './screens/user/UserInfo';
-import wifi  from './screens/wifi';
+import wifi  from './screens/user/wifi';
 
 const Stack = createNativeStackNavigator();
 

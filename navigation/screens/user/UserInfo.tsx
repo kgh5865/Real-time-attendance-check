@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback ,Alert} from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
 import { Text, Icon } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -36,7 +36,7 @@ const UserInfo: React.FC = () => {
       const wifiArray = await WifiManager.loadWifiList();
 
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID == "404A-03" || wifiArray[i].SSID == "n509" ) {
+        if (wifiArray[i].BSSID == "70:5d:cc:d4:f0:5e" || wifiArray[i].BSSID == "90:9f:33:5b:03:da") {
           Alert.alert('알림', '강의실 내에 위치합니다');
           return;
         }

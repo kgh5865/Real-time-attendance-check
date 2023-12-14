@@ -32,7 +32,7 @@ const Home = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FBEFEF',
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
+    color: '#000000'
   },
   button: {
     marginTop: 50,

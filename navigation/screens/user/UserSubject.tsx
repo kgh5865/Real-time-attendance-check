@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableWithoutFeedback,Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Alert, TouchableOpacity } from 'react-native';
 import { Text, Tab, TabView, ListItem, Icon } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -123,7 +123,7 @@ const UserSubject: React.FC = () => {
       const wifiArray = await WifiManager.loadWifiList();
 
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID == "404A-03" || wifiArray[i].SSID == "n509" ) {
+        if (wifiArray[i].BSSID == "70:5d:cc:d4:f0:5e" || wifiArray[i].BSSID == "90:9f:33:5b:03:da") {
           Alert.alert('알림', '강의실 내에 위치합니다');
           return;
         }
@@ -199,11 +199,19 @@ const UserSubject: React.FC = () => {
                           {attdData.map((attdItem) => {
                             // attdItem에서 week와 현재 주차(week)를 비교
                             if (attdItem.week === week + 1) {
-                              console.log('정보확인' + attdItem.week);
                               return (
                                 <View key={`${attdItem.week}-${attdItem.period}`} style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                  <Text style={{marginRight: 30}}>{attdItem.period + '교시'}</Text>
-                                  <Text >{attdItem.attd}</Text>
+                                  <Text style={{ marginRight: 30, fontSize: 17 }}>{attdItem.period + '교시'}</Text>
+                                  <TouchableOpacity style={{
+                                          backgroundColor: attdItem.attd === "출석" ? 'white' : 'orange',
+                                          borderWidth: 1,
+                                          borderColor: attdItem.attd === "출석" ? 'blue' : 'rgba(0, 0, 255, 0)',
+                                          padding: 10,
+                                          borderRadius: 5,
+                                          marginBottom: 3,
+                                        }}>
+                                          <Text style={{ fontSize: 15, color: attdItem.attd === "출석" ? 'black' : 'white' }}>{attdItem.attd}</Text>
+                                  </TouchableOpacity>
                                 </View>
                               );
                             } else {

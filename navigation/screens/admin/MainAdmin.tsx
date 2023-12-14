@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { View, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, StyleSheet, Alert, Linking } from 'react-native';
 import { Button, ButtonGroup, withTheme, Text } from '@rneui/themed';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,8 +15,8 @@ export type RootStackParam = {
   AdminSettings: undefined;
   Absence: undefined;
   Absence2: undefined;
-  AdminChat:undefined;
-  AdminSubject:undefined;
+  AdminChat: undefined;
+  AdminSubject: undefined;
 };
 
 
@@ -25,25 +25,42 @@ export const MainAdmin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainAdmin'>>();
   const [serverState, setServerState] = useState('Loading...');
-  const [messageText, setMessageText] = useState('');
   const context = useContext(AppContext);//전역변수
 
   const webSocket = useRef<WebSocket | null>(null);
 
-  const absenceStart = () => {
-    let str = JSON.stringify({message: "출석"});
-    webSocket.current?.send(str);
+  function openExternalLink(url: string) {
+    Linking.openURL(url)
+      .then(() => console.log(`Opened external link: ${url}`))
+      .catch((error) => console.error(`Error opening external link: ${url}`, error));
+  }
 
-    setMessageText('');
+  const absenceStart = () => {
+    if (!context.attendanceStart) {
+      let str = JSON.stringify({ message: "출석" });
+      webSocket.current?.send(str);
+      context.setAttdStart(true);
+    }
+    else {
+      Alert.alert('알림', '현재 강의 진행 중입니다');
+    }
+
+    console.log(serverState);
   };
   const absenceFin = () => {
-    let str = JSON.stringify({message: "종료"});
-    webSocket.current?.send(str);
-    setMessageText('');
+    if (context.attendanceStart) {
+      let str = JSON.stringify({ message: "종료" });
+      webSocket.current?.send(str);
+      context.setAttdStart(false);
+    }
+    else {
+      Alert.alert('알림', '강의가 시작되지 않았습니다.');
+    }
+
   };
 
   useEffect(() => {
-    webSocket.current = new WebSocket('http://210.119.103.171:8080');
+    webSocket.current = new WebSocket(context.apiUrl);
 
     // onopen event handler
     webSocket.current.onopen = () => {
@@ -62,7 +79,6 @@ export const MainAdmin = () => {
 
     webSocket.current.onmessage = e => {//값 받기
       let parse = JSON.parse(e.data);
-      setMessageText(parse.serverMessage);
     };
 
 
@@ -148,7 +164,7 @@ export const MainAdmin = () => {
               marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
             }}
             onPress={() => absenceStart()/*navigation.navigate('Absence')*/}
-            onPressIn={()=>navigation.navigate('Absence')}
+            onPressIn={() => navigation.navigate('Absence')}
           />
           <Button
             title="종료"
@@ -172,7 +188,101 @@ export const MainAdmin = () => {
               marginVertical: 40, // 버튼 사이의 간격을 벌리기 위해 수정
             }}
             onPress={() => absenceFin()/*navigation.navigate('Absence')*/}
-            onPressIn={()=>navigation.navigate('Absence2')}
+            onPressIn={() => navigation.navigate('Absence2')}
+          />
+        </View>
+        <View style={styles.rowView}>
+          <Button
+            title="셔틀 버스"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: '#00BFFF',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+              color: 'black'
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginLeft: 60,
+            }}
+            onPress={() => openExternalLink('https://lily.sunmoon.ac.kr/Page2/About/About08_04_01.aspx')}
+          />
+          <Button
+            title="포털"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: '#FA8258',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+              color: 'black'
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginRight: 60,
+            }}
+            onPress={() => openExternalLink('https://lily.sunmoon.ac.kr/Page2/Etc/Login.aspx')}
+          />
+        </View>
+        <View style={styles.rowView}>
+          <Button
+            title="학사 정보"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: '#F781D8',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+              color: 'black'
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginLeft: 60,
+              marginVertical: 40,
+            }}
+            onPress={() => openExternalLink('https://sws.sunmoon.ac.kr/Login.aspx')}
+          />
+          <Button
+            title="E-강의동"
+            loading={false}
+            loadingProps={{ size: 'small', color: 'white' }}
+            buttonStyle={{
+              backgroundColor: '#DBED15',
+              borderRadius: 10,
+            }}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              paddingTop: 30,
+              paddingBottom: 30,
+              color: 'black'
+            }}
+            containerStyle={{
+              height: 100,
+              width: 100,
+              marginRight: 60,
+              marginVertical: 40,
+            }}
+            onPress={() => openExternalLink('https://lms.sunmoon.ac.kr/ilos/m/main/Login_form.acl')}
           />
         </View>
       </View>

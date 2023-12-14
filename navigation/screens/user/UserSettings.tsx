@@ -1,5 +1,5 @@
 import React from 'react';
-import {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import { View, StyleSheet, Alert, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -18,17 +18,19 @@ export const UserSettings: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const context = useContext(AppContext);
 
- 
+
   const scanWifi = async () => {
     try {
       const wifiArray = await WifiManager.loadWifiList();
-
+      wifiArray.map((wifi: any) => {
+        console.log('name : ', wifi.SSID, ' Mac : ', wifi.BSSID);
+      });
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID === "n509") {
+        if (wifiArray[i].BSSID === "90:9f:33:5b:03:da") {
           Alert.alert('알림', 'Nlab입니다.');
           return;
-        } else if (wifiArray[i].SSID === "404A-03") {
-          Alert.alert('알림', '캡스톤디자인 강의실입니다.');
+        } else if (wifiArray[i].BSSID === "70:5d:cc:d4:f0:5e") {
+          Alert.alert('알림', `캡스톤디자인 강의실입니다.`);
           return;
         } else if (wifiArray[i].SSID === "iPhone///") {
           Alert.alert('알림', '');
@@ -43,7 +45,7 @@ export const UserSettings: React.FC = () => {
     }
   };
 
-  
+
   useEffect(() => {
 
     // 10초마다 scanWifi 함수 호출
@@ -159,7 +161,7 @@ export const UserSettings: React.FC = () => {
           />
         </View>
       </View>
-      </>
+    </>
   );
 };
 

@@ -16,76 +16,70 @@ export type RootStackParam = {
     stu_type: string;
   };
   List1: undefined;
-  UserSubject:undefined;
+  UserSubject: undefined;
   UserSettings: undefined;
-  UserChat:undefined;
+  UserChat: undefined;
 };
 
-let userInWifi=false;
+let userInWifi = false;
 
 
 export const MainUser = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const route = useRoute<RouteProp<RootStackParam, 'MainUser'>>();
   const context = useContext(AppContext);//전역변수
-  
+
   const [serverState, setServerState] = useState('Loading...');
   const [messageText, setMessageText] = useState('아직안받음');
-  //const [userInWifi, setUserInWifi] = useState(false);//강의실 내에 위치하면 true
 
   const webSocket = useRef<WebSocket | null>(null);
+
   function openExternalLink(url: string) {
     Linking.openURL(url)
       .then(() => console.log(`Opened external link: ${url}`))
       .catch((error) => console.error(`Error opening external link: ${url}`, error));
   }
 
-
-  function touchFunc(){
+  function touchFunc() {
     TouchID.isSupported()
-        .then((supported) => {
-          if (supported) {
-            TouchID.authenticate('지문을 스캔해주세요')
-              .then((success: boolean) => {
-                if (success) {
-                  Alert.alert(`지문 인식 성공! ${context.name}`); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-  
-                  let str = JSON.stringify({
-                    name: context.name,
-                    subj_id: "310037",
-                    subj_part: "13",
+      .then((supported) => {
+        if (supported) {
+          TouchID.authenticate('지문을 스캔해주세요')
+            .then((success: boolean) => {
+              if (success) {
+                Alert.alert(`지문 인식 성공! ${context.name}`); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
 
-                  });
-                  webSocket.current?.send(str);
-                } else {
-                  Alert.alert('지문 인식 실패!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-                }
-              })
-              .catch((error: Error) => {
-                console.log('지문 인식 오류', error);
-              });
-          } else {
-            Alert.alert('이 기기에서는 지문 인식을 지원하지 않습니다.'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
-          }
-        });
+                let str = JSON.stringify({
+                  name: context.name,
+                  subj_id: "310037",
+                  subj_part: "13",
+
+                });
+                webSocket.current?.send(str);
+              } else {
+                Alert.alert('지문 인식 실패!'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
+              }
+            })
+            .catch((error: Error) => {
+              console.log('지문 인식 오류', error);
+            });
+        } else {
+          Alert.alert('이 기기에서는 지문 인식을 지원하지 않습니다.'); // 'Alert.alert'를 사용하여 경고 메시지를 표시합니다.
+        }
+      });
   }
   const scanWifi = async () => {//와이파이 스캔
     try {
-      const wifiArray = await WifiManager.loadWifiList();
+      const wifiArray = await WifiManager.reScanAndLoadWifiList();
 
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID == "n509") {
-          // Alert.alert('알림', '강의실 내에 위치합니다');
-          console.log(wifiArray[i].SSID);
-          // if(!userInWifi) setUserInWifi(true);
-          userInWifi=true;
-          console.log(userInWifi);
+        // if (wifiArray[i].BSSID === "90:9f:33:5b:03:da") {
+        if (wifiArray[i].BSSID === "70:5d:cc:d4:f0:5e") {
+          Alert.alert('알림(실시간)', '강의실 내에 위치합니다');
           return;
         }
       }
-      // setUserInWifi(false);
-      userInWifi=false;
-      Alert.alert('경고', '강의실 외부에 있습니다. 강의실로 돌아가세요');
+      Alert.alert('경고(실시간)', '강의실 외부에 있습니다. 강의실로 돌아가세요');
     } catch (error) {
       console.error('Error scanning wifi:', error);
     }
@@ -96,20 +90,16 @@ export const MainUser = () => {
       const wifiArray = await WifiManager.loadWifiList();
 
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID == "n509"||wifiArray[i].SSID == "404A-03") {
+        // if (wifiArray[i].BSSID === "90:9f:33:5b:03:da") {
+        if (wifiArray[i].BSSID === "70:5d:cc:d4:f0:5e") {
           // Alert.alert('알림', '강의실 내에 위치합니다');
-          console.log(wifiArray[i].SSID);
-          // if(!userInWifi) setUserInWifi(true);
-          userInWifi=true;
-          console.log(userInWifi);
-
-          Alert.alert('알림', '출석을 시작합니다', [{ text: '확인', onPress: () => touchFunc()}]);
+          userInWifi = true;
+          Alert.alert('알림(출석)', '출석을 시작합니다', [{ text: '확인', onPress: () => touchFunc() }]);
+          context.setAttdStart(true);//wifi 실시간 스캔 시작
           return;
         }
       }
-      // setUserInWifi(false);
-      userInWifi=false;
-      Alert.alert('알림', '출석이 시작되었습니다. 강의실로 들어가주세요.');
+      Alert.alert('알림(출석)', '출석이 시작되었습니다. 강의실로 들어가주세요.');
     } catch (error) {
       console.error('Error scanning wifi:', error);
     }
@@ -120,20 +110,16 @@ export const MainUser = () => {
       const wifiArray = await WifiManager.loadWifiList();
 
       for (let i = 0; i < wifiArray.length; i++) {
-        if (wifiArray[i].SSID == "n509" ||wifiArray[i].SSID == "404A-03" ) {
+        // if (wifiArray[i].BSSID === "90:9f:33:5b:03:da") {
+        if (wifiArray[i].BSSID === "70:5d:cc:d4:f0:5e") {
           // Alert.alert('알림', '강의실 내에 위치합니다');
-          console.log(wifiArray[i].SSID);
-          // if(!userInWifi) setUserInWifi(true);
-          userInWifi=true;
-          console.log(userInWifi);
-
-          Alert.alert('알림', '강의가 종료되었습니다. 2차 출석을 진행합니다', [{ text: '확인', onPress: () => touchFunc() }]);
+          userInWifi = false;
+          Alert.alert('알림(출석)', '강의가 종료되었습니다. 2차 출석을 진행합니다', [{ text: '확인', onPress: () => touchFunc() }]);
+          context.setAttdStart(false);//wifi 실시간 스캔 종료
           return;
         }
       }
-      // setUserInWifi(false);
-      userInWifi=false;
-      Alert.alert('알림', '강의가 종료되었습니다.');
+      Alert.alert('알림(출석)', '강의가 종료되었습니다. 2차 출석 진행 중입니다.');
     } catch (error) {
       console.error('Error scanning wifi:', error);
     }
@@ -141,7 +127,7 @@ export const MainUser = () => {
 
 
   useEffect(() => {
-    webSocket.current = new WebSocket('http://210.119.103.171:8080');
+    webSocket.current = new WebSocket(context.apiUrl);
 
     // onopen event handler
     webSocket.current.onopen = () => {
@@ -160,22 +146,23 @@ export const MainUser = () => {
 
     webSocket.current.onmessage = e => {//값 받기
       let parse = JSON.parse(e.data);
-      console.log('출석',parse.message);
+      console.log('출석', parse.message);
       setMessageText(parse.serverMessage);
 
       if (parse.message === "출석") {
-        context.setAttdStart(true);//wifi 실시간 스캔 시작
+
         AttdScanWifi();
       }
       if (parse.message === "종료") {
-        context.setAttdStart(false);//wifi 실시간 스캔 종료
+
         AbsScanWifi();
       }
     };
 
     // 10초마다 scanWifi 함수 호출
     const intervalId = setInterval(() => {
-      if(context.attendanceStart) scanWifi();//강의가 시작되었을 때 스캔 시작
+      if (userInWifi) scanWifi();//강의가 시작되었을 때 스캔 시작
+      //if(context.attendanceStart) scanWifi();//강의가 시작되었을 때 스캔 시작
     }, context.wifiDelay);//5분마다 스캔 반복
 
     return () => {
@@ -282,8 +269,8 @@ export const MainUser = () => {
             }}
             onPress={() => touchFunc()}
           />
-          </View>
-          <View style={styles.rowView}>
+        </View>
+        <View style={styles.rowView}>
           <Button
             title="셔틀 버스"
             loading={false}
@@ -311,7 +298,7 @@ export const MainUser = () => {
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
             buttonStyle={{
-              backgroundColor: '#FE2EC8',
+              backgroundColor: '#FA8258',
               borderRadius: 10,
             }}
             titleStyle={{
@@ -328,14 +315,14 @@ export const MainUser = () => {
             }}
             onPress={() => openExternalLink('https://lily.sunmoon.ac.kr/Page2/Etc/Login.aspx')}
           />
-          </View>
-          <View style={styles.rowView}>
+        </View>
+        <View style={styles.rowView}>
           <Button
             title="학사 정보"
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
             buttonStyle={{
-              backgroundColor: '#BC0303',
+              backgroundColor: '#F781D8',
               borderRadius: 10,
             }}
             titleStyle={{
@@ -376,42 +363,42 @@ export const MainUser = () => {
             }}
             onPress={() => openExternalLink('https://lms.sunmoon.ac.kr/ilos/m/main/Login_form.acl')}
           />
-          </View>
         </View>
       </View>
-);
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-contentView: {
-  backgroundColor: "#FFFFFF",
-  flex: 1,
-},
-subHeader: {
-  backgroundColor: "#FFFFFF",
-  color: "#2089dc",
-  textAlign: "center",
-  paddingVertical: 10,
-  marginBottom: 10,
-  fontSize: 20
-},
-rowView: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  width: '100%',
-},
-buttonsContainer: {
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  marginVertical: 20,
-},
-header: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: 10,
-  borderBottomWidth: 1,
-  borderBottomColor: '#ddd',
-}
+  contentView: {
+    backgroundColor: "#FFFFFF",
+    flex: 1,
+  },
+  subHeader: {
+    backgroundColor: "#FFFFFF",
+    color: "#2089dc",
+    textAlign: "center",
+    paddingVertical: 10,
+    marginBottom: 10,
+    fontSize: 20
+  },
+  rowView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  buttonsContainer: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  }
 });

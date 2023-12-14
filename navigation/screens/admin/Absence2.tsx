@@ -17,13 +17,13 @@ type RootStackParam = {
 };
 
 type StudentData = {
-  user_id : string;
-  name : string;
+  user_id: string;
+  name: string;
 };
 
 type AttdData = {
-  id : string;
-  attd : string;
+  id: string;
+  attd: string;
 };
 
 const Absence: React.FC = () => {
@@ -111,14 +111,14 @@ const Absence: React.FC = () => {
       };
       return attdData;
     });
-  
+
     setCombinedStudents(updatedCombinedStudents);
     lambdaStudentAttendance(updatedCombinedStudents);//람다호출 => DB 데이터 저장
-    
+
   };
 
 
-  const lambdaStudentAttendance = async (item : AttdData[]) => {
+  const lambdaStudentAttendance = async (item: AttdData[]) => {
     try {
       const apiUrl = 'https://7uusyo40h0.execute-api.ap-northeast-2.amazonaws.com/sns-enrollment-stage/set/studentattendance';
 
@@ -127,12 +127,13 @@ const Absence: React.FC = () => {
         subj_part: '13',
         week: '4',
         period: '1',
-        finish: '1',
+        start: '1',
         users: item
       });
 
       // 응답 데이터 확인
       console.log('람다 함수 응답 전체:', response.data);
+      console.log('학생출석현황', item);
     } catch (error) {
       console.error('람다 함수 호출 중 오류:', error);
     }
@@ -145,7 +146,7 @@ const Absence: React.FC = () => {
     // 출석 종료 시 수행할 작업 추가
     console.log('출석 종료 버튼이 눌렸습니다.');
 
-    
+
     Alert.alert(
       '강의 종료',
       '강의 종료 데이터가 출결 DB에 저장',
@@ -218,11 +219,11 @@ const Absence: React.FC = () => {
         setAbsentStudents((prevAbsentStudents) =>
           prevAbsentStudents.filter((student) => student !== studentName)
         );
-  
+
         // attendanceStudents 배열에 새로운 학생 추가
         return [...prevAttendanceStudents, studentName];
       }
-  
+
       // 이미 출석 목록에 있는 경우 이전 배열을 그대로 반환
       return prevAttendanceStudents;
     });
@@ -239,7 +240,7 @@ const Absence: React.FC = () => {
 
   return (
     <>
-     <View style={styles.header2}>
+      <View style={styles.header2}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} />
         </TouchableWithoutFeedback>
@@ -257,23 +258,23 @@ const Absence: React.FC = () => {
                 <Text style={styles.absentStudent}>{student}</Text>
               </TouchableOpacity>
             ))}
-            </View>
-            </ScrollView>
-          
-          <ScrollView contentContainerStyle={styles.column}>
-        <Text style={styles.header}>출석 학생 목록</Text>
-        <View style={styles.absentStudentsContainer}>
-          {attendanceStudents.map((student, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.studentClickable}
-              onPress={() => moveStudentToAbsentList(student)}
-            >
-              <Text style={styles.absentStudent}>{student}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+
+        <ScrollView contentContainerStyle={styles.column}>
+          <Text style={styles.header}>출석 학생 목록</Text>
+          <View style={styles.absentStudentsContainer}>
+            {attendanceStudents.map((student, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.studentClickable}
+                onPress={() => moveStudentToAbsentList(student)}
+              >
+                <Text style={styles.absentStudent}>{student}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
       </View>
 
       {/* 강의 종료 버튼 */}
